@@ -23,7 +23,7 @@ public class MainWindow : Form
 
     public MainWindow()
     {
-        Text = "Classroom Equipment - Progress Version 1";
+        Text = "Classroom Equipment";
         StartPosition = FormStartPosition.CenterScreen;
         Size = new Size(600, 430);
         MinimumSize = new Size(520, 380);
@@ -36,7 +36,7 @@ public class MainWindow : Form
         heading.AutoSize = true;
 
         var description = new Label();
-        description.Text = "Progress 2: equipment classes and handling instructions";
+        description.Text = "Equipment classes and handling instructions";
         description.Location = new Point(25, 62);
         description.AutoSize = true;
 
