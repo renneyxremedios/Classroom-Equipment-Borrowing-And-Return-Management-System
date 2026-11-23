@@ -13,8 +13,8 @@ internal static class Program
     }
 }
 
-// equipment names and categories are stored in a temporary list.
-// Database, student records, login, borrowing, and returns will be added later.
+// a working equipment list without database storage.
+// Login, students, borrowing, and returning will be added later.
 public class MainWindow : Form
 {
     private readonly TextBox equipmentName = new TextBox();
@@ -36,7 +36,7 @@ public class MainWindow : Form
         heading.AutoSize = true;
 
         var description = new Label();
-        description.Text = "Progress 1: add equipment to a temporary list";
+        description.Text = "Progress 2: equipment classes and handling instructions";
         description.Location = new Point(25, 62);
         description.AutoSize = true;
 
@@ -69,6 +69,7 @@ public class MainWindow : Form
         equipmentList.Location = new Point(25, 195);
         equipmentList.Size = new Size(515, 145);
         equipmentList.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+        equipmentList.DoubleClick += ShowHandlingInstructions;
 
         Controls.Add(heading);
         Controls.Add(description);
@@ -92,9 +93,27 @@ public class MainWindow : Form
             return;
         }
 
-        string selectedCategory = category.SelectedItem?.ToString() ?? "Electronic";
-        equipmentList.Items.Add(name + " (" + selectedCategory + ")");
+        Equipment item;
+
+        if (category.SelectedItem?.ToString() == "Electronic")
+        {
+            item = new ElectronicEquipment(name);
+        }
+        else
+        {
+            item = new NonElectronicEquipment(name);
+        }
+
+        equipmentList.Items.Add(item);
         equipmentName.Clear();
         equipmentName.Focus();
+    }
+
+    private void ShowHandlingInstructions(object? sender, EventArgs e)
+    {
+        if (equipmentList.SelectedItem is Equipment item)
+        {
+            MessageBox.Show(item.HandlingInstructions(), item.Name + " - Handling");
+        }
     }
 }
