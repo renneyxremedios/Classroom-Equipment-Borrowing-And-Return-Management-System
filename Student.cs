@@ -1,41 +1,37 @@
 namespace EquipmentProgress;
 
-// Stores the basic information of a student who may borrow equipment.
-// The student registration form and database will be added in a later milestone.
-public class Student
+// Represents a student registered to borrow classroom equipment.
+public sealed class Student
 {
-    public string StudentId { get; }
-    public string FullName { get; private set; } = "";
+    public string Id { get; }
+    public string Name { get; private set; } = "";
     public string Course { get; private set; } = "";
     public string Section { get; private set; } = "";
 
-    public Student(string studentId, string fullName, string course, string section)
+    // Check the ID before storing the remaining student details.
+    public Student(string id, string name, string course, string section)
     {
-        if (string.IsNullOrWhiteSpace(studentId))
-        {
+        if (string.IsNullOrWhiteSpace(id))
             throw new ArgumentException("Student ID is required.");
-        }
 
-        StudentId = studentId.Trim();
-
-        // Use this method to check and save the other student details.
-        UpdateDetails(fullName, course, section);
+        Id = id.Trim();
+        UpdateDetails(name, course, section);
     }
 
-    public void UpdateDetails(string fullName, string course, string section)
+    // Validate the name and normalize text entered through the form.
+    public void UpdateDetails(string name, string course, string section)
     {
-        if (string.IsNullOrWhiteSpace(fullName))
-        {
-            throw new ArgumentException("Student name is required.");
-        }
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Student full name is required.");
 
-        FullName = fullName.Trim();
+        Name = name.Trim();
         Course = course.Trim();
         Section = section.Trim();
     }
 
+    // Show a readable label in student selection controls.
     public override string ToString()
     {
-        return StudentId + " - " + FullName;
+        return Id + " - " + Name;
     }
 }
